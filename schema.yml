@@ -17066,14 +17066,14 @@ paths:
           * `http://www.w3.org/2001/04/xmldsig-more#sha384` - SHA384
           * `http://www.w3.org/2001/04/xmlenc#sha512` - SHA512
       - in: query
-        name: is_backchannel
-        schema:
-          type: boolean
-      - in: query
         name: invalidation_flow
         schema:
           type: string
           format: uuid
+      - in: query
+        name: is_backchannel
+        schema:
+          type: boolean
       - in: query
         name: issuer
         schema:
@@ -31789,8 +31789,7 @@ components:
         pk:
           type: string
           format: uuid
-          readOnly: true
-          title: Pbm uuid
+          title: Connection token uuid
         provider:
           type: integer
         provider_obj:
@@ -31800,7 +31799,6 @@ components:
         endpoint:
           type: string
           format: uuid
-          readOnly: true
         endpoint_obj:
           allOf:
           - $ref: '#/components/schemas/Endpoint'
@@ -31812,7 +31810,6 @@ components:
       required:
       - endpoint
       - endpoint_obj
-      - pk
       - provider
       - provider_obj
       - user
@@ -31820,9 +31817,17 @@ components:
       type: object
       description: ConnectionToken Serializer
       properties:
+        pk:
+          type: string
+          format: uuid
+          title: Connection token uuid
         provider:
           type: integer
+        endpoint:
+          type: string
+          format: uuid
       required:
+      - endpoint
       - provider
     ConsentChallenge:
       type: object
@@ -38613,8 +38618,15 @@ components:
       type: object
       description: ConnectionToken Serializer
       properties:
+        pk:
+          type: string
+          format: uuid
+          title: Connection token uuid
         provider:
           type: integer
+        endpoint:
+          type: string
+          format: uuid
     PatchedConsentStageRequest:
       type: object
       description: ConsentStage Serializer
@@ -40183,6 +40195,11 @@ components:
           type: string
           format: uuid
           description: Flow used when authorizing this provider.
+        invalidation_flow:
+          type: string
+          format: uuid
+          nullable: true
+          description: Flow used ending the session from a provider.
         property_mappings:
           type: array
           items:
@@ -42274,6 +42291,11 @@ components:
           type: string
           format: uuid
           description: Flow used when authorizing this provider.
+        invalidation_flow:
+          type: string
+          format: uuid
+          nullable: true
+          description: Flow used ending the session from a provider.
         property_mappings:
           type: array
           items:
@@ -42354,6 +42376,11 @@ components:
           type: string
           format: uuid
           description: Flow used when authorizing this provider.
+        invalidation_flow:
+          type: string
+          format: uuid
+          nullable: true
+          description: Flow used ending the session from a provider.
         property_mappings:
           type: array
           items:
@@ -43020,12 +43047,16 @@ components:
         authorization_flow:
           type: string
           format: uuid
+        invalidation_flow:
+          type: string
+          format: uuid
         file:
           type: string
           format: binary
       required:
       - authorization_flow
       - file
+      - invalidation_flow
       - name
     SAMLProviderRequest:
       type: object
@@ -45706,8 +45737,8 @@ components:
           description: Get latest version from cache
           readOnly: true
         version_latest_valid:
-          type: boolean
-          description: Latest version query is a valid non-default value
+          type: string
+          description: Check if latest version is valid
           readOnly: true
         build_hash:
           type: string
