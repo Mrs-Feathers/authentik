@@ -3,7 +3,6 @@ import "@goauthentik/admin/providers/rac/ConnectionTokenList";
 import "@goauthentik/admin/providers/rac/EndpointForm";
 import "@goauthentik/admin/providers/rac/EndpointList";
 import "@goauthentik/admin/providers/rac/RACProviderForm";
-import "@goauthentik/app/elements/rbac/ObjectPermissionsPage";
 import { DEFAULT_CONFIG } from "@goauthentik/common/api/config";
 import { EVENT_REFRESH } from "@goauthentik/common/constants";
 import "@goauthentik/components/ak-status-label";
@@ -13,6 +12,7 @@ import "@goauthentik/elements/CodeMirror";
 import "@goauthentik/elements/Tabs";
 import "@goauthentik/elements/buttons/ModalButton";
 import "@goauthentik/elements/buttons/SpinnerButton";
+import "@goauthentik/elements/rbac/ObjectPermissionsPage";
 
 import { msg } from "@lit/localize";
 import { CSSResult, PropertyValues, TemplateResult, html } from "lit";
@@ -88,7 +88,11 @@ export class RACProviderViewPage extends AKElement {
             <section slot="page-overview" data-tab-title="${msg("Overview")}">
                 ${this.renderTabOverview()}
             </section>
-            <section slot="page-connections" data-tab-title="${msg("Connections")}">
+            <section
+                slot="page-connections"
+                data-tab-title="${msg("Connections")}"
+                class="pf-c-page__main-section pf-m-no-padding-mobile"
+            >
                 <div class="pf-c-card">
                     <div class="pf-c-card__body">
                         <ak-rac-connection-token-list
