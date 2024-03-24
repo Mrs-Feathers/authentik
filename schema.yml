@@ -43825,7 +43825,6 @@ components:
         invalidation_flow_url:
           type: string
       required:
-      - application_name
       - pending_user
       - pending_user_avatar
       - type
